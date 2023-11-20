@@ -1,0 +1,46 @@
+CREATE TABLE Department (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(50)
+);
+
+INSERT INTO Department (DepartmentID, DepartmentName)
+VALUES
+(1, 'HR'),
+(2, 'Finance'),
+(3, 'IT');
+
+
+CREATE TABLE Employee (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Salary DECIMAL(10, 2),
+    HireDate DATE,
+    DepartmentID INT -- This is the new column
+);
+
+INSERT INTO Employee VALUES
+(1, 'John', 'Doe', 50000.00, '2023-01-01', 1),
+(2, 'Jane', 'Smith', 60000.00, '2023-02-15', 2),
+(3, 'Bob', 'Johnson', 75000.00, '2023-03-20', 1);
+
+
+CREATE VIEW HighSalaryEmployees AS
+SELECT * FROM Employee WHERE Salary > 60000.00;
+
+SELECT * FROM HighSalaryEmployees;
+
+
+CREATE INDEX idx_LastName ON Employee(LastName);
+
+
+ALTER TABLE Employee
+ADD CONSTRAINT fk_Department
+FOREIGN KEY (DepartmentID)
+REFERENCES Department(DepartmentID);
+
+ALTER TABLE Employee
+ADD CONSTRAINT chk_Salary
+CHECK (Salary >= 0);
+
+

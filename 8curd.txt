@@ -1,0 +1,47 @@
+
+use myblogdb;
+
+
+db.createCollection("articles");
+
+
+
+db.articles.insertOne({
+    title: "Introduction to MongoDB",
+    content: "MongoDB is a NoSQL database...",
+    author: "John Doe",
+    author_age: 30,
+    category: "Database",
+    comments: [
+        { name: "Alice", remarks: "Great article!" },
+        { name: "Bob", remarks: "I learned a lot." }
+    ]
+});
+
+db.articles.insertOne({
+    title: "Getting Started with Node.js",
+    content: "Node.js is a JavaScript runtime...",
+    author: "Jane Smith",
+    author_age: 25,
+    category: "Web Development",
+    comments: [
+        { name: "Charlie", remarks: "Very informative." }
+    ]
+});
+
+
+
+
+db.articles.find();
+
+
+db.articles.find({ category: "Database" });
+
+
+db.articles.updateOne(
+    { title: "Introduction to MongoDB" },
+    { $set: { content: "MongoDB is a powerful NoSQL database..." } }
+);
+
+
+db.articles.deleteOne({ title: "Getting Started with Node.js" });

@@ -1,0 +1,51 @@
+
+use mystoredb;
+
+db.createCollection("orders");
+
+
+
+
+db.orders.insertMany([
+    {
+        order_id: 1,
+        cust_id: 101,
+        cust_name: "John Doe",
+        item_name: "Laptop",
+        quantity: 2,
+        amount: 1200.00,
+        status: "P"
+    },
+    {
+        order_id: 2,
+        cust_id: 102,
+        cust_name: "Jane Smith",
+        item_name: "Smartphone",
+        quantity: 1,
+        amount: 500.00,
+        status: "D"
+    },
+]);
+
+
+
+db.orders.aggregate(
+  {
+    $match: {
+      status: "P"
+    }
+  }
+)
+db.orders.aggregate(
+  {
+    $group: {
+      _id: "$cust_id",
+      totalAmount: { $sum: "$amount" }
+    }
+  }
+).pretty();
+
+
+
+
+db.orders.createIndex({ cust_id: 1 });
